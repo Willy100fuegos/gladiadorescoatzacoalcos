@@ -1,7 +1,8 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/$USER/public_html
+    - export DEPLOYPATH=/home/mmagladiadoresmx/public_html
     - /bin/mkdir -p $DEPLOYPATH
     - /bin/cp -R out/* $DEPLOYPATH/
     - /bin/cp out/.htaccess $DEPLOYPATH/
+
