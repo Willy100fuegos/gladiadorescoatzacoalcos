@@ -7,8 +7,9 @@ dist
 .env.*
 .env.local
 
-# Documentación Markdown (NUNCA SUBIR)
+# Documentación Markdown protegida
 *.md
+!README.md
 
 # Sistema y logs
 .DS_Store
