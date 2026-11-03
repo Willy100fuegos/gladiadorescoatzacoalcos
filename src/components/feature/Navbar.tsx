@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
+import { Sun, Moon } from "lucide-react";
 
 const NAV_LINKS = [
   { label: "Nosotros", href: "#nosotros" },
@@ -9,6 +10,23 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [isDark]);
+
+  const toggleTheme = () => {
+    setIsDark((prev) => !prev);
+  };
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -20,7 +38,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 left-0 w-full z-50 bg-[#000000]">
+    <nav className="sticky top-0 left-0 w-full z-50 bg-[#000000] border-b border-primary-500/20">
       <div className="w-full px-6 md:px-12 lg:px-16">
         <div className="flex items-center justify-between h-20 md:h-24">
           <a
@@ -29,7 +47,7 @@ export default function Navbar() {
             className="flex-shrink-0"
           >
             <img
-              src="http://imgfz.com/i/WpQlI2O.png"
+              src="https://imgfz.com/i/WpQlI2O.png"
               alt="GLADIADORES MMA Logo"
               className="h-12 md:h-14 w-auto"
             />
@@ -48,7 +66,16 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-3">
+            <button
+              onClick={toggleTheme}
+              className="w-10 h-10 rounded-full border border-primary-500/40 bg-zinc-900 flex items-center justify-center text-primary-500 hover:bg-primary-500 hover:text-black transition-all duration-300 shadow-sm"
+              aria-label="Alternar modo oscuro o claro"
+              title={isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+            >
+              {isDark ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5" />}
+            </button>
+
             <a
               href="#contacto"
               onClick={(e) => handleNavClick(e, "#contacto")}
@@ -58,13 +85,23 @@ export default function Navbar() {
             </a>
           </div>
 
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden w-10 h-10 flex items-center justify-center text-primary-500"
-            aria-label="Menú"
-          >
-            <i className={`text-2xl transition-all duration-300 ${mobileOpen ? "ri-close-line" : "ri-menu-line"}`} />
-          </button>
+          <div className="flex md:hidden items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className="w-9 h-9 rounded-full border border-primary-500/40 bg-zinc-900 flex items-center justify-center text-primary-500"
+              aria-label="Alternar tema"
+            >
+              {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
+            </button>
+
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="w-10 h-10 flex items-center justify-center text-primary-500"
+              aria-label="Menú"
+            >
+              <i className={`text-2xl transition-all duration-300 ${mobileOpen ? "ri-close-line" : "ri-menu-line"}`} />
+            </button>
+          </div>
         </div>
       </div>
 
