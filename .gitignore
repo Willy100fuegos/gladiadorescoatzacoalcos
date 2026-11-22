@@ -2,14 +2,24 @@ node_modules
 dist
 *.zip
 
+# Source maps (No exponer ni subir a git)
+*.map
+
 # Entorno y credenciales (NUNCA SUBIR)
 .env
 .env.*
 .env.local
+deploy_secrets.local
+*.key
+*.pem
+*.sql
 
-# Documentación Markdown protegida
+# Documentación interna / planes (NUNCA SUBIR)
 *.md
 !README.md
+CONTEXTO_TECNICO.md
+project_plan.md
+implementation_plan*.md
 
 # Sistema y logs
 .DS_Store
@@ -23,4 +33,3 @@ pnpm-debug.log*
 # Cachés y herramientas de desarrollo
 .vite
 .eslintcache
-
